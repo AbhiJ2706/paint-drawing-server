@@ -92,6 +92,8 @@ app.post("/api/Login", function(req, res) {
     var psword = req.body.password;
     var mail = req.body.email;
 
+    console.log(mail)
+
     var newAccount = {
         username: usrname,
         password: psword,
@@ -109,8 +111,14 @@ app.post("/api/Login", function(req, res) {
             } else {
                 code = 1;
             }
+        } else if (mail == "")  {
+            if (allAccounts[usrname].password == psword){
+                code = 2;
+            } else {
+                code = 1;
+            }
         } else {
-            code = 0;
+            code = 0
         }
     } else {
         code = 0;
