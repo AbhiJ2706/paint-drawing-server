@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <form>
+            <input type="checkbox" id="m" name="m" title="Most recent" onclick="updateDisplay()" />
+            <label for="m"> Most recent</label><br>
+            <input type="checkbox" id="l" name="l" title="Least recent" onclick="updateDisplay()" />
+            <label for="l"> Least recent</label><br>
+        </form>
+    </head>
+    <!--<button style="float:bottom; position:absolute; bottom:0" onclick="loadMore()">Load more pictures...</button>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        class imgDisplay {
+            constructor(data){
+                this.name = data[0];
+                this.img = data[1];
+                this.timestamp = data[2]
+                this.display;
+            }
+
+            createCanvas(){
+                var newDiv = document.createElement("div");
+                newDiv.style.width = "30%";
+                newDiv.style.height = 350;
+                var image_1 = new Image;
+                image_1.style.width = 400;
+                image_1.style.height = 300;
+                image_1.style.border = "3px solid black"
+                image_1.src = "data:image/png;base64,"+this.img;
+                newDiv.appendChild(image_1);
+                var info = document.createElement("p");
+                info.innerHTML = "By " + this.name;
+                info.style.width = 400;
+                info.style.height = 50;
+                newDiv.appendChild(info)
+                this.display = newDiv;
+            }
+
+            getDisplay(){
+                this.createCanvas();
+                return this.display;
+            }
+        }
+
+        var counter = 0;
+        var allCanvasses = [];
+
+        function loadMore(data){
+            for (var i = counter; i < counter + 12; i++){
+                try {
+                    allCanvasses.push(new imgDisplay(data[i]))
+                } catch (err){console.log(err)}
+            }
+            counter += 12;
+        }
+
+        function updateDisplay(){
+            if (document.getElementById("l").checked){
+                document.body.innerHTML = ""
+                allCanvasses = allCanvasses.sort(function(a, b) {
+                    return parseFloat(a.timestamp) - parseFloat(b.timestamp);
+                });
+                for (var i = 0; i < allCanvasses.length; i++){
+                    document.body.appendChild(allCanvasses[i].getDisplay())
+                }
+            } else {
+                document.body.innerHTML = ""
+                allCanvasses = allCanvasses.sort(function(a, b) {
+                    return parseFloat(b.timestamp) - parseFloat(a.timestamp);
+                });
+                for (var i = 0; i < allCanvasses.length; i++){
+                    document.body.appendChild(allCanvasses[i].getDisplay())
+                }
+            }
+        }
+
+        $.post("http://localhost:8000/api/Display", {}, function(data){
+            data = data.sort(function(a, b) {
+                return parseFloat(b[2]) - parseFloat(a[2]);
+            });
+            console.log(data)
+            loadMore(data)
+            updateDisplay()
+        }) 
+        
+    </script>
+</html>
