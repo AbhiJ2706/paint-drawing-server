@@ -47,6 +47,7 @@
                     <p style="display:inline" id="lineX2">0 </p>
                     <p style="display:inline" id="lineY2">0 </p>
                 </div>
+                <button id="displayAll">Show lots of circles!</button>
             </div>
             <div id="lineMetrics">
                 
@@ -158,6 +159,8 @@
     var lineSameEndXButton2 = document.getElementById("sameEndEndX");
     var lineSameEndYButton2 = document.getElementById("sameEndEndY");
     var lineEndMidpointButton = document.getElementById("midpointEnd");
+
+    var circleButton = document.getElementById("displayAll");
 
     var lineXP = document.getElementById("lineX");
     var lineYP = document.getElementById("lineY");
@@ -279,6 +282,10 @@
     linePerpendicularButton.onclick = function(){
         lineModule.setPerpendicular();
         updateCurrentLineMetrics(lineModule.getCurrentMetrics());
+    }
+
+    circleButton.onclick = function(){
+        lineModule.displayAllPoints();
     }
 
     function receiveBlue(){

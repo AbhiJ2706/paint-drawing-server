@@ -211,6 +211,23 @@ class lineDrawer {
         this.finalCanvas.strokeWidth = x;
     }
 
+    getAllPoints(){
+        var arr = []
+        for (var i = 0; i < this.lineMetrics.length; i++){
+            arr.push([this.lineMetrics[i][0],this.lineMetrics[i][1]])
+        }
+        return arr
+    }
+
+    displayAllPoints(){
+        var a = this.getAllPoints();
+        for (var i = 0; i < a.length; i++){
+            this.currentCanvas.beginPath();
+            this.currentCanvas.arc(a[i][0], a[i][1], 25, 0, 2 * Math.PI);
+            this.currentCanvas.stroke(); 
+        }
+    }
+
 }
 
 class line {
