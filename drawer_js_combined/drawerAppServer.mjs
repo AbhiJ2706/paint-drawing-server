@@ -11,6 +11,7 @@ var bodyParser = require('body-parser');
 var fs = require("fs")
 
 var allAccounts = JSON.parse(fs.readFileSync(__dirname + "/accounts.json"));
+var allEmails = JSON.parse(fs.readFileSync(__dirname + "/accounts_email.json"));
 
 var app = express();
 
@@ -104,35 +105,46 @@ app.post("/api/Login", function(req, res) {
 
     var code = 0;
 
-    if (allAccounts[usrname] != null){
-        if (allAccounts[usrname].email == mail){
-            if (allAccounts[usrname].password == psword){
-                code = 2;
-            } else {
-                code = 1;
-            }
-        } else if (mail == "")  {
+    if (mail == ""){
+        if (allAccounts[usrname] != null){
             if (allAccounts[usrname].password == psword){
                 code = 2;
             } else {
                 code = 1;
             }
         } else {
-            code = 0
+            code = 1;
         }
     } else {
-        code = 0;
+        if (allAccounts[usrname] != null){
+            if (allAccounts[usrname].email != mail){
+                code = 3
+            } else {
+                if (allAccounts[usrname].password == psword){
+                    code = 2;
+                } else {
+                    code = 1;
+                }
+            }
+        } else {
+            code = 0;
+        }
     }
 
     if (code == 0){
         allAccounts[usrname] = newAccount;
+        allEmails[mail] = usrname;
         let data = JSON.stringify(allAccounts);
+        let data2 = JSON.stringify(allEmails);
         fs.writeFileSync(__dirname + '/accounts.json', data);
+        fs.writeFileSync(__dirname + '/accounts_email.json', data2);
         res.send("0")
     } else if (code == 1) {
         res.send("1")
-    } else {
+    } else if (code == 2) {
         res.send("2")
+    } else if (code == 3){
+        res.send("3")
     }
 });
 
