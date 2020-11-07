@@ -41,4 +41,8 @@ class penDrawer {
             this.y = this.y2;
         }
     }
+
+    receiveFillStyle(f){
+        this.currentCanvas.strokeStyle = f;
+    }
 }

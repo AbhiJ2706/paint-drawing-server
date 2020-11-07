@@ -7,7 +7,6 @@
         <input type="range" id="lineControllerWidth" style="float:top; width:800px" min="1" max="800" />
         <div style="float:right; width:40%">
             <button style="width:49%" onclick="showPenControls()">Pen</button>
-            <button style="width:49%" onclick="showLineControls()">Line</button>
         </div>
     </div>
     <div id="centralCanvas" style="width:60%; float:left">
@@ -16,43 +15,6 @@
         <input type="range" orient="vertical" id="lineControllerHeight" style="float:right; height:600px" min="1" max="600" />
     </div>
     <div id="right" style="float:right; width:40%; display:block">
-        <div id="line" style="visibility:hidden; display:none; height:59%; width:100%">
-            <div id="lineButtons">
-                <div id="top_lineButtons" style="float:left; width:100%; ">
-                    <button id="line">New Line</button>
-                    <button id="done">Done</button>
-                </div>
-                <div id="bottom_lineButtons_1" style="float:left; width:100%; ">
-                    <p style="width:100%">Start Point</p>
-                    <button id="sameStartStartX">Same Start X</button>
-                    <button id="sameStartStartY">Same Start Y</button>
-                    <button id="sameStartEndX">Same End X</button>
-                    <button id="sameStartEndY">Same End Y</button>
-                    <button id="midpointStart">Midpoint</button>
-                    <p style="width:100%">End Point</p>
-                    <button id="sameEndStartX">Same Start X</button>
-                    <button id="sameEndStartY">Same Start Y</button>
-                    <button id="sameEndEndX">Same End X</button>
-                    <button id="sameEndEndY">Same End Y</button>
-                    <button id="midpointEnd">Midpoint</button>
-                </div>
-                <div id="bottom_lineButtons_2" style="float:left; width:100%; ">
-                    <p style="width:100%">Line Slope</p>
-                    <button id="parallel">Parallel</button>
-                    <button id="perpendicular">Perpendicular</button>
-                    <p style="width:100%">Line Start:</p>
-                    <p style="display:inline" id="lineX">0 </p>
-                    <p style="display:inline" id="lineY">0 </p>
-                    <p style="width:100%">Line End:</p>
-                    <p style="display:inline" id="lineX2">0 </p>
-                    <p style="display:inline" id="lineY2">0 </p>
-                </div>
-                <button id="displayAll">Show lots of circles!</button>
-            </div>
-            <div id="lineMetrics">
-                
-            </div>
-        </div>
         <div id="pen" style="visibility:hidden; display:none; height:59%; width:100%">
             <button id="setToPen">Pen</button>
             <button id="setToFill">Fill</button>
@@ -84,20 +46,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
-    function showLineControls(){
-        inLineMode = true;
-        document.getElementById("line").style.visibility = "visible"
-        document.getElementById("line").style.display = "block"
-        document.getElementById("pen").style.visibility = "hidden"
-        document.getElementById("pen").style.display = "none"
-    }
-
     function showPenControls(){
         inLineMode = false;
         document.getElementById("pen").style.visibility = "visible"
         document.getElementById("pen").style.display = "block"
-        document.getElementById("line").style.visibility = "hidden"
-        document.getElementById("line").style.display = "none"
     }
 
     function submitImg(){
@@ -128,7 +80,6 @@
     }
 
 </script>
-<script src="lineDrawer.mjs"></script>
 <script src="penDrawer.mjs"></script>
 <script> 
 
@@ -139,196 +90,67 @@
     var c2 = document.getElementById("c2");
     var utility = document.getElementById("utility");
 
-    var lineUp = document.getElementById("lineControllerHeight");
-    var lineRight = document.getElementById("lineControllerWidth");
     var thickness = document.getElementById("thicknessSlider");
 
-    var lineCreatorButton = document.getElementById("line");
-    var lineFinisherButton = document.getElementById("done");
-    var lineParallelButton = document.getElementById("parallel");
-    var linePerpendicularButton = document.getElementById("perpendicular");
-
-    var lineSameStartXButton = document.getElementById("sameStartStartX");
-    var lineSameStartYButton = document.getElementById("sameStartStartY");
-    var lineSameStartXButton2 = document.getElementById("sameStartEndX");
-    var lineSameStartYButton2 = document.getElementById("sameStartEndY");
-    var lineStartMidpointButton = document.getElementById("midpointStart");
-
-    var lineSameEndXButton = document.getElementById("sameEndStartX");
-    var lineSameEndYButton = document.getElementById("sameEndStartY");
-    var lineSameEndXButton2 = document.getElementById("sameEndEndX");
-    var lineSameEndYButton2 = document.getElementById("sameEndEndY");
-    var lineEndMidpointButton = document.getElementById("midpointEnd");
-
-    var circleButton = document.getElementById("displayAll");
-
-    var lineXP = document.getElementById("lineX");
-    var lineYP = document.getElementById("lineY");
-    var lineX2P = document.getElementById("lineX2");
-    var lineY2P = document.getElementById("lineY2");
-
-    var lineModule = new lineDrawer(utility, c2, lineRight, lineUp);
     var penModule = new penDrawer(c2);
 
     var inLineMode = false;
 
     function draw(e){
-        if (!inLineMode){
-            penModule.draw(e);
-        }
+        penModule.draw(e);
     }
 
     function setDraw(e){
-        if (!inLineMode){
-            penModule.setDraw(e);
-        }
+        penModule.setDraw(e);
     }
 
     function unSetDraw(e){
-        if (!inLineMode){
-            penModule.unSetDraw();
-        }
-    }
-
-    function updateCurrentLineMetrics(metrics){
-        lineXP.innerHTML = Math.round(metrics[0]);
-        lineYP.innerHTML = Math.round(metrics[1]);
-        lineX2P.innerHTML = Math.round(metrics[2]);
-        lineY2P.innerHTML = Math.round(metrics[3]);
+        penModule.unSetDraw();
     }
 
     thickness.onchange = function(){
-        lineModule.setThickness(thickness.value);
         penModule.setThickness(thickness.value);
     }
 
-    lineCreatorButton.onclick = function(){
-        lineModule.changeToLine();
-    }
-
-    utility.onclick = function(e){
-        lineModule.chooseLineInitialPoint(e);
-    }
-
-    lineUp.onchange = function(){
-        lineModule.updateUpAndDownSlider();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    lineRight.onchange = function(){
-        lineModule.updateLeftAndRightSlider();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    lineFinisherButton.onclick = function(){
-        lineModule.finish();
-    }
-
-    lineParallelButton.onclick = function(){
-        lineModule.setParallel();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    lineSameStartXButton.onclick = function(){
-        lineModule.setSameStart_StartX();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    lineSameStartYButton.onclick = function(){
-        lineModule.setSameStart_StartY();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    lineSameStartXButton2.onclick = function(){
-        lineModule.setSameStart_EndX();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    lineSameStartYButton2.onclick = function(){
-        lineModule.setSameStart_EndY();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    lineStartMidpointButton.onclick = function(){
-        lineModule.setStart_Midpoint();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    lineSameEndXButton.onclick = function(){
-        lineModule.setSameEnd_StartX();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    lineSameEndYButton.onclick = function(){
-        lineModule.setSameEnd_StartY();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    lineSameEndXButton2.onclick = function(){
-        lineModule.setSameEnd_EndX();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    lineSameEndYButton2.onclick = function(){
-        lineModule.setSameEnd_EndY();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    lineEndMidpointButton.onclick = function(){
-        lineModule.setEnd_Midpoint();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    linePerpendicularButton.onclick = function(){
-        lineModule.setPerpendicular();
-        updateCurrentLineMetrics(lineModule.getCurrentMetrics());
-    }
-
-    circleButton.onclick = function(){
-        lineModule.displayAllPoints();
-    }
-
     function receiveBlue(){
-        lineModule.receiveFillStyle("#0000FF");
+        penModule.receiveFillStyle("#0000FF");
     }
 
     function receiveRed(){
-        lineModule.receiveFillStyle("#FF0000");
+        penModule.receiveFillStyle("#FF0000");
     }
 
     function receiveGreen(){
-        lineModule.receiveFillStyle("#00FF00");
+        penModule.receiveFillStyle("#00FF00");
     }
 
     function receiveYellow(){
-        lineModule.receiveFillStyle("#FFF200");
+        penModule.receiveFillStyle("#FFF200");
     }
 
     function receiveOrange(){
-        lineModule.receiveFillStyle("#FFB700");
+        penModule.receiveFillStyle("#FFB700");
     }
 
     function receivePurple(){
-        lineModule.receiveFillStyle("#D400FF");
+        penModule.receiveFillStyle("#D400FF");
     }
 
     function receiveBlack(){
-        lineModule.receiveFillStyle("#000000");
+        penModule.receiveFillStyle("#000000");
     }
 
     function receiveWhite(){
-        lineModule.receiveFillStyle("#FFFFFF");
+        penModule.receiveFillStyle("#FFFFFF");
     }
 
     function receivePink(){
-        lineModule.receiveFillStyle("#FF7DDE");
+        penModule.receiveFillStyle("#FF7DDE");
     }
 
     function receiveTurquoise(){
-        lineModule.receiveFillStyle("#25F5DE");
+        penModule.receiveFillStyle("#25F5DE");
     }
-
-
 
 </script>
 </html>
