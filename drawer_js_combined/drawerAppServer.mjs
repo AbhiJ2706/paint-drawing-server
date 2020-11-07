@@ -42,7 +42,7 @@ app.post("/api/Upload", function(req, res) {
     var buf = new Buffer(base64Data, 'base64');
     var d = new Date();
     var n = d.getTime().toString();
-    var fname = __dirname + "/images/out_" + n + '_' + req.body.usr + ".png";
+    var fname = "out_" + n + '_' + req.body.usr + ".png";
     allAccounts[req.body.usr].pictures.push(fname);
     let data = JSON.stringify(allAccounts);
     fs.writeFileSync(__dirname + '/accounts.json', data);
@@ -66,7 +66,7 @@ app.post("/api/Display", function(req, res) {
     for (var i = 0; i < pics.length; i++){
         try {
             for (var j = 0; j < pics[i][1].length; j++){
-                a.push([pics[i][0], base64_encode(pics[i][1][j]), pics[i][2][j]])
+                a.push([pics[i][0], base64_encode(__dirname + "/images/" + pics[i][1][j]), pics[i][2][j]])
             }
         } catch(err) {
             console.log("error parsing file", pics[i][1])
