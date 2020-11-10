@@ -44,9 +44,10 @@ app.post("/api/Upload", function(req, res) {
     var n = d.getTime().toString();
     var fname = "out_" + n + '_' + req.body.usr + ".png";
     allAccounts[req.body.usr].pictures.push(fname);
+    allAccounts[req.body.usr].pictures_times.push(n);
     let data = JSON.stringify(allAccounts);
     fs.writeFileSync(__dirname + '/accounts.json', data);
-    fs.writeFile(fname, buf, 'base64', function(err) {
+    fs.writeFile(__dirname + "/images/" + fname, buf, 'base64', function(err) {
         console.log("yahoo!");
     });
 });
