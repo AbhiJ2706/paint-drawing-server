@@ -16,9 +16,9 @@
     </div>
     <div id="right" style="float:right; width:40%; display:block">
         <div id="pen" style="visibility:hidden; display:none; height:59%; width:100%">
-            <button id="setToPen">Pen</button>
-            <button id="setToFill">Fill</button>
-            <button id="setToErase">Erase</button>
+            <button onclick="setToDrawMode()" id="setToPen">Pen</button>
+            <button onclick="setDraw()" id="setToFill">Fill</button>
+            <button onclick="setToEraserMode()" id="setToErase">Erase</button>
         </div>
         <div id="bottom" style="height:40%; width:100%">
             <button id="blue" style="width:9%; height:9%; background-color:#0000FF" onclick="receiveBlue()"></button>
@@ -31,7 +31,7 @@
             <button id="white" style="width:9%; height:9%; background-color:#FFFFFF" onclick="receiveWhite()"></button>
             <button id="pink" style="width:9%; height:9%; background-color:#FF7DDE" onclick="receivePink()"></button>
             <button id="turquoise" style="width:9%; height:9%; background-color:#25F5DE" onclick="receiveTurquoise()"></button>
-            <input type="range" id="thicknessSlider" style="width:100%" min="2" max="96"/>
+            <input type="range" id="thicknessSlider" style="width:100%" min="1" max="72"/>
             <div id="finish">
                 <button id="downloadToComputer" onclick="dlCanvas()">Save and download</button>
                 <button id="uploadToServer" onclick="submitImg()">Save and upload</button>
@@ -53,8 +53,6 @@
     }
 
     function submitImg(){
-        var email = sessionStorage.getItem('email')
-        var username = sessionStorage.getItem('username')
         console.log("upload button clicked")
         var a = document.getElementById("c2").toDataURL("image/png");
         console.log(a)
@@ -83,6 +81,11 @@
 <script src="penDrawer.mjs"></script>
 <script> 
 
+    var email = sessionStorage.getItem('email')
+    var username = sessionStorage.getItem('username')   
+
+    console.log(email, username)
+
     document.addEventListener("mousemove", draw, false);
     document.addEventListener("mousedown", setDraw, false);  
     document.addEventListener("mouseup", unSetDraw, false);   
@@ -94,10 +97,16 @@
 
     var penModule = new penDrawer(c2);
 
+    console.log(typeof penModule)
+
     var inLineMode = false;
 
     function draw(e){
-        penModule.draw(e);
+        if (penModule.drawing){
+            penModule.draw(e);
+        } else if (penModule.eraser) {
+            penModule.erase(e);
+        }
     }
 
     function setDraw(e){
@@ -108,8 +117,17 @@
         penModule.unSetDraw();
     }
 
+    function setToDrawMode(){
+        penModule.setToDrawMode()
+    }
+
+    function setToEraserMode(){
+        penModule.setToEraserMode()
+    }
+
     thickness.onchange = function(){
-        penModule.setThickness(thickness.value);
+        console.log(typeof thickness.value)
+        penModule.setThickness(parseInt(thickness.value));
     }
 
     function receiveBlue(){
