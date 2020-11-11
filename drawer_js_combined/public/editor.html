@@ -12,7 +12,7 @@
         <div id="pen" style="visibility:visible; display:block; height:20%; width:100%">
             <button onclick="setToDrawMode()" id="setToPen">Pen</button>
             <hr style="visibility:hidden">
-            <button onclick="setDraw()" id="setToFill">Fill</button>
+            <button onclick="setToFillingMode()" id="setToFill">Fill</button>
             <hr style="visibility:hidden">
             <button onclick="setToEraserMode()" id="setToErase">Erase</button>
             <hr style="visibility:hidden">
@@ -75,6 +75,7 @@
 
 </script>
 <script src="penDrawer.mjs"></script>
+<script src="floodFill.mjs"></script>
 <script> 
 
     var email = sessionStorage.getItem('email')
@@ -106,7 +107,14 @@
     }
 
     function setDraw(e){
-        penModule.setDraw(e);
+        if (!penModule.filling) {
+            penModule.setDraw(e);
+        } else {
+            var rect = c2.getBoundingClientRect();
+            x = e.clientX - rect.left;
+            y = e.clientY - rect.top;
+            flood_fill(c2, penModule.currentCanvas, x, y, color_to_rgba("#FF0000"))
+        }
     }
 
     function unSetDraw(e){
@@ -119,6 +127,10 @@
 
     function setToEraserMode(){
         penModule.setToEraserMode()
+    }
+
+    function setToFillingMode(){
+        penModule.setToFillingMode()
     }
 
     thickness.onchange = function(){

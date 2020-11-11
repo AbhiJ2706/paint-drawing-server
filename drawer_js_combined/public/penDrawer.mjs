@@ -16,6 +16,7 @@ class penDrawer {
         this.eraser = false;
         this.drawingMode = true;
         this.erasingMode = false;
+        this.filling = false;
     }
 
     setDraw(e){
@@ -37,11 +38,19 @@ class penDrawer {
     setToDrawMode(){
         this.drawingMode = true;
         this.erasingMode = false;
+        this.filling = false;
     }
 
     setToEraserMode(){
         this.drawingMode = false;
         this.erasingMode = true;
+        this.filling = false;
+    }
+
+    setToFillingMode(){
+        this.drawingMode = false;
+        this.erasingMode = false;
+        this.filling = true;
     }
 
     unSetDraw(){
