@@ -35,6 +35,11 @@ app.get("/editor", function(req, res) {
     res.sendFile(__dirname + "/public/editor.html");
 });
 
+app.get("/home", function(req, res) {
+    console.log("home time")
+    res.sendFile(__dirname + "/public/index.html");
+});
+
 app.post("/api/Upload", function(req, res) {
     console.log("yahoo!")
     var base64Data = req.body.img.toString().replace(/^data:image\/png;base64,/, "");
@@ -86,6 +91,11 @@ app.post("/api/goToDisplay", function(req, res){
 app.post("/api/goToEditor", function(req, res){
     console.log("yahoo3");
     res.redirect('/editor')
+});
+
+app.post("/api/goHome", function(req, res){
+    console.log("yahoo4");
+    res.redirect('/home')
 });
 
 app.post("/api/Login", function(req, res) {

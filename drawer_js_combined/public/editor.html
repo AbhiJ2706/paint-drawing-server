@@ -17,7 +17,9 @@
             <button onclick="setToEraserMode()" id="setToErase">Erase</button>
             <hr style="visibility:hidden">
             <p>Thickness</p>
-            <input type="range" id="thicknessSlider" style="width:100%" min="1" max="72"/>
+            <div style="width:100%; height:30%; float:left" >
+                <input type="range" id="thicknessSlider" style="width:90%; float:left" min="1" max="72"/>
+            </div>
             <hr style="visibility:hidden">
             <p>Change Color</p>
             <button id="blue" style="width:9%; height:36%; background-color:#0000FF" onclick="receiveBlue()"></button>
@@ -79,7 +81,16 @@
 <script> 
 
     var email = sessionStorage.getItem('email')
-    var username = sessionStorage.getItem('username')   
+    var username = sessionStorage.getItem('username')
+    
+    if (username == null && email == null){
+        
+        alert ("This is a warning message!");
+        $.post("http://localhost:8000/api/goHome").done(function(){
+            window.location.assign('/home')
+        });
+            
+    }
 
     console.log(email, username)
 
@@ -113,7 +124,7 @@
             var rect = c2.getBoundingClientRect();
             x = e.clientX - rect.left;
             y = e.clientY - rect.top;
-            flood_fill(c2, penModule.currentCanvas, x, y, color_to_rgba("#FF0000"))
+            flood_fill(c2, penModule.currentCanvas, x, y, color_to_rgba(penModule.currentFillStyle))
         }
     }
 
