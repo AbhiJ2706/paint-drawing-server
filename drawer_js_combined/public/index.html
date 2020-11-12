@@ -1,18 +1,25 @@
 <html>
-    <p>Username</p>
-    <input id="username" type="text" style="width:100%" />
-    <p>Password</p>
-    <input id="password" type="text" style="width:100%" />
-    <p>Email: fill this in if you are creating a new account, if not, leave it blank!</p>
-    <input id="email" type="text" style="width:100%" />
-    <button onclick="submit()">Submit</button>
-    <p id="accountSuccess" style="visibility:hidden; display:none; width:100%">Account creation success!</p>
-    <p id="accountFailure" style="visibility:hidden; display:none; width:100%">Incorrect Password.</p>
-    <p id="accountFailure2" style="visibility:hidden; display:none; width:100%">Email already taken.</p>
-    <p id="accountExists" style="visibility:hidden; display:none; width:100%">Welcome Back!</p>
-    <button id="gallery" onclick="goToDisplay()" style="visibility:hidden; display:none; width:100%">See what others have drawn</button>
-    <button id="editor" onclick="goToEditor()" style="visibility:hidden; display:none; width:100%">Draw a picture</button>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS https://getuikit.com/docs/form -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit-icons.min.js"></script>
+    </head>
+    <hr style="visibility:hidden">
+    <div class="uk-margin uk-card uk-card-default uk-card-body" style="width:30%; margin:auto">    
+        <p>Username</p>
+        <input id="username" class="uk-textarea" type="text" style="width:100%" />
+        <p>Password</p>
+        <input id="password" class="uk-textarea" type="text" style="width:100%" />
+        <p>Email: fill this in if you are creating a new account, if not, leave it blank!</p>
+        <input id="email" class="uk-textarea" type="text" style="width:100%" />
+        <hr style="visibility:hidden">
+        <button class="uk-button uk-button-default" id="submit-button" onclick="submit()">Submit</button>
+        <button class="uk-button uk-button-default" id="gallery" onclick="goToDisplay()" style="visibility:hidden; display:none; width:100%">See what others have drawn</button>
+        <button class="uk-button uk-button-default" id="editor" onclick="goToEditor()" style="visibility:hidden; display:none; width:100%">Draw a picture</button>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </div>
     <script>
 
         function submit(){
@@ -20,26 +27,21 @@
             var pass = document.getElementById("password").value;
             var em = document.getElementById("email").value;
             $.post("http://localhost:8000/api/Login", {username: usr, password: pass, email: em}, function(data){
+                console.log(data);
                 if (data == "0") {
-                    document.getElementById("accountSuccess").style.visibility = "visible";
-                    document.getElementById("accountSuccess").style.display = "block";
-                    document.getElementById("gallery").style.visibility = "visible";
-                    document.getElementById("gallery").style.display = "block";
-                    document.getElementById("editor").style.visibility = "visible";
-                    document.getElementById("editor").style.display = "block";
+                    UIkit.modal.alert("Account Created!")
+                    hide("submit-button")
+                    show("gallery")
+                    show("editor")
                 } else if (data == "1") {
-                    document.getElementById("accountFailure").style.visibility = "visible";
-                    document.getElementById("accountFailure").style.display = "block";
+                    UIkit.modal.alert("Incorrect Password.")
                 } else if (data == "2") {
-                    document.getElementById("accountExists").style.visibility = "visible";
-                    document.getElementById("accountExists").style.display = "block";
-                    document.getElementById("gallery").style.visibility = "visible";
-                    document.getElementById("gallery").style.display = "block";
-                    document.getElementById("editor").style.visibility = "visible";
-                    document.getElementById("editor").style.display = "block";
+                    UIkit.modal.alert("Welcome Back!")
+                    hide("submit-button")
+                    show("gallery")
+                    show("editor")
                 } else if (data == "3") {
-                    document.getElementById("accountFailure2").style.visibility = "visible";
-                    document.getElementById("accountFailure2").style.display = "block";
+                    UIkit.modal.alert("Email Already Taken.")
                 }
             }).done(function(){
                 console.log(em)
@@ -58,6 +60,16 @@
             $.post("http://localhost:8000/api/goToEditor").done(function(){
                 window.location.assign('/editor')
             });
+        }
+
+        function show(el){
+            document.getElementById(el).style.visibility = "visible";
+            document.getElementById(el).style.display = "block";
+        }
+
+        function hide(el){
+            document.getElementById(el).style.visibility = "hidden";
+            document.getElementById(el).style.display = "none";
         }
 
     </script>
