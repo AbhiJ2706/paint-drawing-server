@@ -1,6 +1,11 @@
 <html>
 <head>
     <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS https://getuikit.com/docs/form -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit-icons.min.js"></script>
 </head>
 <body>
     <div id="top" style="width:100%; height:40px"></div>
@@ -10,36 +15,43 @@
     </div>
     <div id="right" style="float:right; width:40%; display:block">
         <div id="pen" style="visibility:visible; display:block; height:20%; width:100%">
-            <button onclick="setToDrawMode()" id="setToPen">Pen</button>
-            <hr style="visibility:hidden">
-            <button onclick="setToFillingMode()" id="setToFill">Fill</button>
-            <hr style="visibility:hidden">
-            <button onclick="setToEraserMode()" id="setToErase">Erase</button>
-            <hr style="visibility:hidden">
+            <p>Pen settings</p>
+            <button class="uk-button uk-button-default" onclick="setToDrawMode()" id="setToPen">Pen</button>
+            
+            <button class="uk-button uk-button-default" onclick="setToFillingMode()" id="setToFill">Fill</button>
+            
+            <button class="uk-button uk-button-default" onclick="setToEraserMode()" id="setToErase">Erase</button>
+            
             <p>Thickness</p>
             <div style="width:100%; height:30%; float:left" >
-                <input type="range" id="thicknessSlider" style="width:90%; float:left" min="1" max="72"/>
+                <input class="uk-range" type="range" id="thicknessSlider" style="width:90%; float:left" min="1" max="72"/>
             </div>
             <hr style="visibility:hidden">
             <p>Change Color</p>
-            <button id="blue" style="width:9%; height:36%; background-color:#0000FF" onclick="receiveBlue()"></button>
-            <button id="red" style="width:9%; height:36%; background-color:#FF0000" onclick="receiveRed()"></button>
-            <button id="green" style="width:9%; height:36%; background-color:#00FF00" onclick="receiveGreen()"></button>
-            <button id="yellow" style="width:9%; height:36%; background-color:#FFF700" onclick="receiveYellow()"></button>
-            <button id="orange" style="width:9%; height:36%; background-color:#FFB700" onclick="receiveOrange()"></button>
-            <button id="purple" style="width:9%; height:36%; background-color:#D400FF" onclick="receivePurple()"></button>
-            <button id="black" style="width:9%; height:36%; background-color:#000000" onclick="receiveBlack()"></button>
-            <button id="white" style="width:9%; height:36%; background-color:#FFFFFF" onclick="receiveWhite()"></button>
-            <button id="pink" style="width:9%; height:36%; background-color:#FF7DDE" onclick="receivePink()"></button>
-            <button id="turquoise" style="width:9%; height:36%; background-color:#25F5DE" onclick="receiveTurquoise()"></button>
+            <button class="uk-button uk-button-default" id="blue" style="width:9%; height:36%; background-color:#0000FF" onclick="receiveBlue()"></button>
+            <button class="uk-button uk-button-default" id="red" style="width:9%; height:36%; background-color:#FF0000" onclick="receiveRed()"></button>
+            <button class="uk-button uk-button-default" id="green" style="width:9%; height:36%; background-color:#00FF00" onclick="receiveGreen()"></button>
+            <button class="uk-button uk-button-default" id="yellow" style="width:9%; height:36%; background-color:#FFF700" onclick="receiveYellow()"></button>
+            <button class="uk-button uk-button-default" id="orange" style="width:9%; height:36%; background-color:#FFB700" onclick="receiveOrange()"></button>
+            <button class="uk-button uk-button-default" id="purple" style="width:9%; height:36%; background-color:#D400FF" onclick="receivePurple()"></button>
+            <button class="uk-button uk-button-default" id="black" style="width:9%; height:36%; background-color:#000000" onclick="receiveBlack()"></button>
+            <button class="uk-button uk-button-default" id="white" style="width:9%; height:36%; background-color:#FFFFFF" onclick="receiveWhite()"></button>
+            <button class="uk-button uk-button-default" id="pink" style="width:9%; height:36%; background-color:#FF7DDE" onclick="receivePink()"></button>
+            <button class="uk-button uk-button-default" id="turquoise" style="width:9%; height:36%; background-color:#25F5DE" onclick="receiveTurquoise()"></button>
+            <button class="uk-button uk-button-default" id="orange" style="width:9%; height:36%; background-color:#ff6a00" onclick="receiveOrange()"></button>
+            <button class="uk-button uk-button-default" id="purple" style="width:9%; height:36%; background-color:#3e7536" onclick="receivePurple()"></button>
+            <button class="uk-button uk-button-default" id="black" style="width:9%; height:36%; background-color:#999999" onclick="receiveBlack()"></button>
+            <button class="uk-button uk-button-default" id="white" style="width:9%; height:36%; background-color:#8000ff" onclick="receiveWhite()"></button>
+            <button class="uk-button uk-button-default" id="pink" style="width:9%; height:36%; background-color:#a3ffc5" onclick="receivePink()"></button>
+            <button class="uk-button uk-button-default" id="turquoise" style="width:9%; height:36%; background-color:#ffb5f8" onclick="receiveTurquoise()"></button>
             <hr style="visibility:hidden">
             <p>Finish</p>
-            <hr style="visibility:hidden">
-            <button id="downloadToComputer" onclick="dlCanvas()">Save and download</button>
-            <hr style="visibility:hidden">
-            <button id="uploadToServer" onclick="submitImg()">Save and upload</button>
-            <hr style="visibility:hidden">
-            <button id="displayPics" onclick="dispImgs()">See what others have drawn</button>
+            
+            <button class="uk-button uk-button-default" id="downloadToComputer" onclick="dlCanvas()">Save and download</button>
+            
+            <button class="uk-button uk-button-default" id="uploadToServer" onclick="submitImg()">Save and upload</button>
+            
+            <button class="uk-button uk-button-default" id="displayPics" onclick="dispImgs()">Gallery</button>
             <hr style="visibility:hidden">
             <form id="imgSubmitter" enctype="multipart/form-data" action="api/Upload/" method="post" style="visibility:hidden">
                 <input id="imgSubmitInput" name="imgUploader" type="text">
