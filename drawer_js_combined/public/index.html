@@ -5,14 +5,16 @@
         <!-- UIkit JS https://getuikit.com/docs/form -->
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit-icons.min.js"></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">     
     </head>
     <hr style="visibility:hidden">
     <div class="uk-margin uk-card uk-card-default uk-card-body" style="width:30%; margin:auto">    
-        <p>Username</p>
+        <p style="font-family: 'Ubuntu', sans-serif;">Username</p>
         <input id="username" class="uk-textarea" type="text" style="width:100%" />
-        <p>Password</p>
-        <input id="password" class="uk-textarea" type="text" style="width:100%" />
-        <p>Email: fill this in if you are creating a new account, if not, leave it blank!</p>
+        <p style="font-family: 'Ubuntu', sans-serif;">Password</p>
+        <input id="password" class="uk-textarea" type="password" style="width:100%" />
+        <p style="font-family: 'Ubuntu', sans-serif;">Email: fill this in if you are creating a new account, if not, leave it blank!</p>
         <input id="email" class="uk-textarea" type="text" style="width:100%" />
         <hr style="visibility:hidden">
         <button class="uk-button uk-button-default" id="submit-button" onclick="submit()">Submit</button>
