@@ -116,46 +116,46 @@ app.post("/api/Login", function(req, res) {
 
     var code = 0;
 
-    if (mail == ""){
-        if (allAccounts[usrname] != null){
-            if (allAccounts[usrname].password == psword){
-                code = 2;
-            } else {
-                code = 1;
-            }
+    
+    if (allAccounts[usrname] != null && mail == ""){
+        if (allAccounts[usrname].password == psword){
+            code = 0; //password correct
         } else {
-            code = 1;
+            code = 1; //password incorrect
         }
+    } else if (allAccounts[usrname] == null && mail == ""){
+        console.log("did this work?")
+        code = 5 //username not found
     } else {
-        if (allAccounts[usrname] != null){
-            if (allAccounts[usrname].email != mail){
-                code = 3
-            } else {
-                if (allAccounts[usrname].password == psword){
-                    code = 2;
-                } else {
-                    code = 1;
-                }
-            }
+        if (allEmails[mail] != null){
+            code = 2 //email taken
         } else {
-            code = 0;
+            if (allAccounts[usrname] != null){
+                code = 3 //username taken
+            } else {
+                code = 4 //login creation
+            }
         }
     }
 
-    if (code == 0){
+    if (code == 4){
         allAccounts[usrname] = newAccount;
         allEmails[mail] = usrname;
         let data = JSON.stringify(allAccounts);
         let data2 = JSON.stringify(allEmails);
         fs.writeFileSync(__dirname + '/accounts.json', data);
         fs.writeFileSync(__dirname + '/accounts_email.json', data2);
-        res.send("0")
+        res.send("4")
     } else if (code == 1) {
         res.send("1")
     } else if (code == 2) {
         res.send("2")
     } else if (code == 3){
         res.send("3")
+    } else if (code == 0) {
+        res.send("0");
+    } else {
+        res.send("5")
     }
 });
 
