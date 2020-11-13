@@ -6,6 +6,10 @@
             <input type="checkbox" id="l" name="l" title="Least recent" onclick="updateDisplay()" />
             <label for="l"> Least recent</label><br>
         </form>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit-icons.min.js"></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">   
     </head>
     <!--<button style="float:bottom; position:absolute; bottom:0" onclick="loadMore()">Load more pictures...</button>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -21,18 +25,25 @@
 
             createCanvas(){
                 var newDiv = document.createElement("div");
-                newDiv.style.width = "30%";
+                newDiv.style.width = "700";
+                newDiv.style.height = "500";
+                newDiv.style.display = "inline";
+                newDiv.style.float = "left";
+                newDiv.style.clear = "none"; 
+                var date = new Date(parseInt(this.timestamp)); 
+                var strDate = date.toString();
                 newDiv.style.height = 350;
                 var image_1 = new Image;
                 image_1.style.width = 400;
                 image_1.style.height = 300;
                 image_1.style.border = "3px solid black"
+                image_1.style.margin = "auto";
                 image_1.src = "data:image/png;base64,"+this.img;
                 newDiv.appendChild(image_1);
                 var info = document.createElement("p");
-                info.innerHTML = "By " + this.name;
-                info.style.width = 400;
-                info.style.height = 50;
+                info.innerHTML = "By " + this.name + " on " + strDate;
+                info.style.width = 700;
+                info.style.height = 100;
                 newDiv.appendChild(info)
                 this.display = newDiv;
             }
