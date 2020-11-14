@@ -9,10 +9,11 @@
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit-icons.min.js"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">   
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">  
+        <button class="uk-button uk-button-default" onclick="loadMore()">Load more pictures...</button>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     </head>
-    <!--<button style="float:bottom; position:absolute; bottom:0" onclick="loadMore()">Load more pictures...</button>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <div id="dbody"></div>
     <script>
 
         class imgDisplay {
@@ -41,9 +42,12 @@
                 image_1.src = "data:image/png;base64,"+this.img;
                 newDiv.appendChild(image_1);
                 var info = document.createElement("p");
-                info.innerHTML = "By " + this.name + " on " + strDate;
+                var real_info = "By " + this.name + " on " + strDate.substr(0, 11)
+                console.log(real_info);
+                info.innerHTML = real_info;
                 info.style.width = 700;
                 info.style.height = 100;
+                info.style.fontFamily = "Ubuntu,sans-serif";
                 newDiv.appendChild(info)
                 this.display = newDiv;
             }
@@ -68,20 +72,20 @@
 
         function updateDisplay(){
             if (document.getElementById("l").checked){
-                document.body.innerHTML = ""
+                document.getElementById("dbody").innerHTML = ""
                 allCanvasses = allCanvasses.sort(function(a, b) {
                     return parseFloat(a.timestamp) - parseFloat(b.timestamp);
                 });
                 for (var i = 0; i < allCanvasses.length; i++){
-                    document.body.appendChild(allCanvasses[i].getDisplay())
+                    document.getElementById("dbody").appendChild(allCanvasses[i].getDisplay())
                 }
             } else {
-                document.body.innerHTML = ""
+                document.getElementById("dbody").innerHTML = ""
                 allCanvasses = allCanvasses.sort(function(a, b) {
                     return parseFloat(b.timestamp) - parseFloat(a.timestamp);
                 });
                 for (var i = 0; i < allCanvasses.length; i++){
-                    document.body.appendChild(allCanvasses[i].getDisplay())
+                    document.getElementById("dbody").appendChild(allCanvasses[i].getDisplay())
                 }
             }
         }
