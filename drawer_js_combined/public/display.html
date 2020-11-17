@@ -1,19 +1,26 @@
 <html>
     <head>
-        <form>
-            <input type="checkbox" id="m" name="m" title="Most recent" onclick="updateDisplay()" />
-            <label for="m"> Most recent</label><br>
-            <input type="checkbox" id="l" name="l" title="Least recent" onclick="updateDisplay()" />
-            <label for="l"> Least recent</label><br>
-        </form>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/css/uikit.min.css" />
+
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit-icons.min.js"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">  
-        <button class="uk-button uk-button-default" onclick="loadMore()">Load more pictures...</button>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     </head>
-    <div id="dbody"></div>
+    <hr>
+    <div style="width:92%; margin:auto" id="top">
+        <h1 class="uk-heading-divider" style="font-family:Ubuntu, sans-serif">Gallery</h1>
+        <form>
+            <input type="checkbox" id="m" name="m" title="Most recent" onclick="updateDisplay()" checked/>
+            <label for="m"> Most recent</label><br>
+            <input type="checkbox" id="l" name="l" title="Least recent" onclick="updateDisplay()" />
+            <label for="l"> Least recent</label><br>
+        </form>
+        <button class="uk-button uk-button-default" onclick="loadMore()">Load more pictures...</button>
+    </div>
+    <hr>
+    <div style="width:90%; margin:auto" id="dbody"></div>
     <script>
 
         class imgDisplay {
@@ -26,7 +33,7 @@
 
             createCanvas(){
                 var newDiv = document.createElement("div");
-                newDiv.style.width = "700";
+                newDiv.style.width = "50%";
                 newDiv.style.height = "500";
                 newDiv.style.display = "inline";
                 newDiv.style.float = "left";
@@ -45,7 +52,7 @@
                 var real_info = "By " + this.name + " on " + strDate.substr(0, 11)
                 console.log(real_info);
                 info.innerHTML = real_info;
-                info.style.width = 700;
+                info.style.width = 600;
                 info.style.height = 100;
                 info.style.fontFamily = "Ubuntu,sans-serif";
                 newDiv.appendChild(info)
