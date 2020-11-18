@@ -8,6 +8,7 @@ class penDrawer {
         this.currentCanvas.lineCap = "round";
         this.currentCanvas.fillRect(0, 0, 800, 600)
         this.currentFillStyle = "#000000"
+        this.currentCanvas.lineWidth = 36;
         this.x = 0;
         this.y = 0;
         this.x2 = 0;
