@@ -13,7 +13,7 @@
     </div>
     <div style="width:100%; height:90%">
         <div id="centralCanvas" style="width:59%; float:left">
-            <canvas id="c2" style="z-index:2; border:3px solid black; position:absolute; margin:auto" width="800" height="600"></canvas>
+            <canvas id="c2" style="z-index:2; border:3px solid black; position:absolute" width="800" height="600"></canvas>
         </div>
         <div id="right" style="float:right; width:40%; display:block">
             <div id="pen">
@@ -27,6 +27,7 @@
                 </div>
                 <hr style="visibility:hidden">
                 <p>Change Color</p>
+                <button class="uk-button uk-button-default" id="yellow" style="width:9%; height:9%; background-color:#FFF700" onclick="receiveYellow()"></button>
                 <button class="uk-button uk-button-default" id="orange" style="width:9%; height:9%; background-color:#FFB700" onclick="receiveOrange()"></button>
                 <button class="uk-button uk-button-default" id="orange" style="width:9%; height:9%; background-color:#ff6a00" onclick="receiveDOrange()"></button>   
                 <button class="uk-button uk-button-default" id="red" style="width:9%; height:9%; background-color:#FF0000" onclick="receiveRed()"></button>
@@ -35,7 +36,6 @@
                 <button class="uk-button uk-button-default" id="purple" style="width:9%; height:9%; background-color:#D400FF" onclick="receiveDPink()"></button>
                 <button class="uk-button uk-button-default" id="pink" style="width:9%; height:9%; background-color:#FF7DDE" onclick="receivePink()"></button>
                 <button class="uk-button uk-button-default" id="turquoise" style="width:9%; height:9%; background-color:#ffb5f8" onclick="receiveLPink()"></button>
-                <button class="uk-button uk-button-default" id="yellow" style="width:9%; height:9%; background-color:#FFF700" onclick="receiveYellow()"></button>
                 <button class="uk-button uk-button-default" id="white" style="width:9%; height:9%; background-color:#FFFFFF" onclick="receiveWhite()"></button>
                 <button class="uk-button uk-button-default" id="pink" style="width:9%; height:9%; background-color:#a3ffc5" onclick="receiveLAqua()"></button>
                 <button class="uk-button uk-button-default" id="turquoise" style="width:9%; height:9%; background-color:#25F5DE" onclick="receiveTurquoise()"></button>
@@ -139,7 +139,7 @@
             x = e.clientX - rect.left;
             y = e.clientY - rect.top;
             console.log("filled???")
-            flood_fill(c2, penModule.currentCanvas, x, y, color_to_rgba(penModule.currentFillStyle))
+            flood_fill(c2, penModule.currentCanvas, x, y, color_to_rgba("#000000"))
         }
     }
 
