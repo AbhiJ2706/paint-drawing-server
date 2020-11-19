@@ -8,6 +8,10 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">     
     </head>
+    
+    <div class="uk-margin uk-card uk-card-default uk-card-body" style="width:40%; margin:auto">
+        <h1 class="uk-heading-medium" style="width:100%; margin:auto; font-family:Ubuntu, sans-serif">Painter</h1>
+    </div>
     <hr style="visibility:hidden">
     <div class="uk-margin uk-card uk-card-default uk-card-body" style="width:30%; margin:auto">    
         <p style="font-family: 'Ubuntu', sans-serif;">Username</p>
@@ -31,32 +35,23 @@
             $.post("http://localhost:8000/api/Login", {username: usr, password: pass, email: em}, function(data){
                 console.log(data);
                 if (data == "0") {
-                    UIkit.modal.alert("Account Created!")
+                    UIkit.modal.alert("Welcome Back!")
                     hide("submit-button")
                     show("gallery")
                     show("editor")
                 } else if (data == "1") {
                     UIkit.modal.alert("Incorrect Password.")
                 } else if (data == "2") {
-                    UIkit.modal.alert("Welcome Back!")
+                    UIkit.modal.alert("Email taken.")
+                } else if (data == "3") {
+                    UIkit.modal.alert("Username taken.")
+                } else if (data == "4"){
+                    UIkit.modal.alert("Account Created!")
                     hide("submit-button")
                     show("gallery")
                     show("editor")
-                } else if (data == "3") {
-                    UIkit.modal.alert("Email Already Taken.")
-                } else if (data == "3") {
-                    document.getElementById("accountFailure3").style.visibility = "visible";
-                    document.getElementById("accountFailure3").style.display = "block";
-                } else if (data == "4"){
-                    document.getElementById("accountSuccess").style.visibility = "visible";
-                    document.getElementById("accountSuccess").style.display = "block";
-                    document.getElementById("gallery").style.visibility = "visible";
-                    document.getElementById("gallery").style.display = "block";
-                    document.getElementById("editor").style.visibility = "visible";
-                    document.getElementById("editor").style.display = "block";
                 } else if (data == "5"){
-                    document.getElementById("accountFailure4").style.visibility = "visible";
-                    document.getElementById("accountFailure4").style.display = "block";
+                    UIkit.modal.alert("Username not found.")
                 }
             }).done(function(){
                 console.log(em)

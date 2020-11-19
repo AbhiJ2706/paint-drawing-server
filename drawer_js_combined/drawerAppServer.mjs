@@ -54,6 +54,7 @@ app.post("/api/Upload", function(req, res) {
     fs.writeFileSync(__dirname + '/accounts.json', data);
     fs.writeFile(__dirname + "/images/" + fname, buf, 'base64', function(err) {
         console.log("yahoo!");
+        res.send("Image received!")
     });
 });
 
