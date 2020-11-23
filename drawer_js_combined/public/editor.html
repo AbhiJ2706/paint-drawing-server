@@ -139,7 +139,7 @@
             x = e.clientX - rect.left;
             y = e.clientY - Math.round(rect.top);
             console.log("filled???", x, y, e.clientX, rect.left, e.clientY, rect.top)
-            flood_fill(c2, penModule.currentCanvas, x, y, color_to_rgba(penModule.currentFillStyle))
+            flood_fill(c2, penModule.currentCanvas, x, y, color_to_rgba("#000000"))
         }
     }
 
