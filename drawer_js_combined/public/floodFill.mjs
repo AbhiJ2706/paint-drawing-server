@@ -1,6 +1,6 @@
 // taken from https://ben.akrin.com/canvas_fill/fill_05.html
 
-function flood_fill(the_canvas, the_canvas_context, original_x, original_y, color ) {
+function flood_fill( the_canvas, the_canvas_context, original_x, original_y, color ) {
     original_color = the_canvas_context.getImageData( original_x, original_y, 1, 1 ).data ;
     original_color = { r:original_color[0],
                        g:original_color[1],
